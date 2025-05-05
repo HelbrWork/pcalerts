@@ -1,0 +1,35 @@
+networks:
+  pcalerts-network:
+    name: pcalerts-network
+    external: true
+
+services:
+  php:
+    build:
+      context: .
+      target: php-debug
+    volumes:
+      - ./:/srv/app
+      #- var-volume:/srv/app/var
+      #TODO: UNCOMMENT AFTER DEPLOIT
+      #- ./var/srv/app/var:rw
+      - ./docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro
+    env_file:
+      - .env.local
+    environment:
+      - XDEBUG_MODE=${XDEBUG_MODE:-debug}
+    networks:
+      - pcalerts-network
+
+  caddy:
+    build:
+      target: caddy
+      context: .
+    volumes:
+      - ./public:/srv/app/public:ro
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+    networks:
+      - pcalerts-network
+
+volumes:
+  var-volume:
