@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
+    {{ include("footer/footer.html.twig") }}
     <meta charset="UTF-8">
     <title>Login | PlayCash</title>
     <style>
@@ -78,10 +80,10 @@
 <body>
 
 <div class="login-container">
-    <img src="{{ asset('img/logo_white.png') }}" alt="Logo" class="logo">
+    <img src="{{ asset('img/logo_white.svg') }}" alt="Logo" class="logo">
     <h2>Login to PlayCash CRM</h2>
 
-    <form method="post" action="{{ path('app_login') }}">
+    <form method="post" action="{{ path('login_check') }}">
         <label for="username">Email</label>
         <input type="text" id="username" name="_username" required>
 

@@ -8,7 +8,7 @@ security:
                 property: email
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|CSS|images|js)/
             security: false
         main:
             provider: admin
