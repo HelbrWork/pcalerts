@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block body %}
+    <div class="alert alert-warning text-center" role="alert"></div>
     <div class="container mt-5">
         <div class="card shadow-sm">
             <div class="card-header bg-dark text-white">
@@ -57,9 +58,7 @@
                         </ul>
                     </nav>
                 {% else %}
-                    <div class="alert alert-warning text-center" role="alert">
-                        No users found.
-                    </div>
+
                 {% endif %}
             </div>
         </div>

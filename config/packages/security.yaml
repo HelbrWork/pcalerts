@@ -2,7 +2,7 @@ security:
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     providers:
-        app_user_provider:
+        admin:
             entity:
                 class: App\Entity\User
                 property: email
@@ -10,15 +10,14 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-#        main:
-#            provider: main
-#            pattern: ^/
-#            user_checker: App\Security\UserChecker
-#            form_login:
-#                provider: admin
-#                login_path: login
-#                check_path: login_check
-#                default_target_path: index
+        main:
+            provider: admin
+            pattern: ^/
+            form_login:
+                provider: admin
+                login_path: login
+                check_path: login_check
+                default_target_path: index
             logout:
                 path: logout
                 target: login
