@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | PlayCash</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #1a1a1a;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background-color: #2a2a2a;
+            padding: 2rem 3rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto 1.5rem;
+            height: 50px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.7rem;
+            margin-bottom: 1.5rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #3a3a3a;
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <img src="{{ asset('img/logo_white.png') }}" alt="Logo" class="logo">
+    <h2>Login to PlayCash CRM</h2>
+
+    <form method="post" action="{{ path('app_login') }}">
+        <label for="username">Email</label>
+        <input type="text" id="username" name="_username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="_password" required>
+
+        <button type="submit">Log In</button>
+    </form>
+
+    <div class="footer">© PlayCash</div>
+</div>
+
+</body>
+</html>

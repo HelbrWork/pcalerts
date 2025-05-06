@@ -1,0 +1,11 @@
+<header style="background-color: #000; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center;">
+        <img src="{{ asset('img/logo_white.svg') }}" alt="Logo" style="height: 40px; margin-right: 1rem;">
+        <span style="font-size: 1.5rem; font-weight: bold;">PLAYCASH</span>
+    </div>
+
+    <div style="text-align: right;">
+        <div style="font-weight: bold;">{{ user.roles|lower }}</div>
+        <div>{{ user.email }}</div>
+    </div>
+</header>
