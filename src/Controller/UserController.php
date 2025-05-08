@@ -15,7 +15,7 @@ class UserController extends AbstractController
     {
     }
 
-    #[Route('/users', name: 'user_list', methods: ['GET'])]
+    #[Route('/users', name: 'users', methods: ['GET'])]
     public function index(): Response
     {
         $allUsers = $this->userRepository->findAll();
@@ -37,6 +37,6 @@ class UserController extends AbstractController
             $user->isActive() ? 'active' : 'inactive'
         ));
 
-        return $this->redirectToRoute('user_list');
+        return $this->redirectToRoute('users');
     }
 }

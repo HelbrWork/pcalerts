@@ -20,8 +20,20 @@ final class UserFactory extends PersistentObjectFactory
             'updatedAt' => self::faker()->dateTime(),
             'password' => 'qwerty123',
             'roles' => ['ROLE_USER'],
-
         ];
+    }
+
+    public static function getMainUser(): User
+    {
+        return self::createOne(
+            [
+                'email' => 'admin@admin.com',
+                'password' => password_hash('admin', PASSWORD_BCRYPT),
+                'roles' => ['ROLE_ADMIN','ROLE_USER'],
+                'active' => true,
+                'tgName' => '@admin'
+            ]
+        );
     }
 
     public static function class(): string

@@ -16,15 +16,15 @@ security:
             form_login:
                 provider: admin
                 login_path: login
-                check_path: login_check
-                default_target_path: index
+                check_path: login
+                default_target_path: users
             logout:
                 path: logout
                 target: login
 
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/login, roles: PUBLIC_ACCESS }
+         - { path: ^/, roles: ROLE_USER }
 
     role_hierarchy:
         ROLE_SUPER_ADMIN:

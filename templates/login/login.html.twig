@@ -82,8 +82,12 @@
 <div class="login-container">
     <img src="{{ asset('img/logo_white.svg') }}" alt="Logo" class="logo">
     <h2>Login to PlayCash CRM</h2>
-
-    <form method="post" action="{{ path('login_check') }}">
+    {% if error %}
+        <div style="color: #ff5555; margin-bottom: 15px; text-align: center;">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+    <form method="post" action="{{ path('login') }}">
         <label for="username">Email</label>
         <input type="text" id="username" name="_username" required>
 
