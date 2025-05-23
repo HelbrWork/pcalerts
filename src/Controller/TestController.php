@@ -16,10 +16,10 @@ class TestController extends AbstractController
     ){
     }
 
-    #[Route('/total', name: 'total', methods: ['GET'])]
+    #[Route('/adv', name: 'adv', methods: ['GET'])]
     public function test()
     {
-        return new JsonResponse($this->client->getTotal());
+        return new JsonResponse($this->client->getAdvertisers());
     }
 
 

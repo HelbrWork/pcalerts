@@ -23,6 +23,7 @@ security:
                 target: login
 
     access_control:
+         - { path: ^/adv, roles: PUBLIC_ACCESS }
          - { path: ^/login, roles: PUBLIC_ACCESS }
          - { path: ^/, roles: ROLE_USER }
 
