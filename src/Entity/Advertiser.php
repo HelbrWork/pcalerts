@@ -6,22 +6,19 @@ use App\Repository\AdvertiserRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: AdvertiserRepository::class)]
 class Advertiser
 {
-    use TimestampableEntity;
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
     private int|null $id = null;
 
-    #[ORM\Column(type: Types::STRING, length: 100, unique: true)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private string $affiseAdvertiserId;
 
-    #[ORM\Column(type: Types::STRING, length: 100, unique: true)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private string $affiseManagerId;
 
     #[ORM\Column(type: Types::STRING, length: 100)]

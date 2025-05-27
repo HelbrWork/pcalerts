@@ -4,23 +4,19 @@ namespace App\Controller;
 
 use App\Client\AffiseApiClient;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class TestController extends AbstractController
+final class TestController extends AbstractController
 {
     public function __construct(
-        private AffiseApiClient $client,
+        private readonly AffiseApiClient $client,
     ){
     }
 
     #[Route('/adv', name: 'adv', methods: ['GET'])]
-    public function test()
+    public function test(): JsonResponse
     {
         return new JsonResponse($this->client->getAdvertisers());
     }
-
-
 }

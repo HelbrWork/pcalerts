@@ -1,6 +1,6 @@
 ### service containers:
 ```bash
-docker compose -f docker-compose.services.yml -p pcalerts-services up -d
+docker compose -f compose.services.yml -p pcalerts-services up -d
 ```
 
 ### php and caddy containers:
