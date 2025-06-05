@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final readonly class AffiseApiClient
+final readonly class AdvertiserAffiseApiClient implements ApiClientInterface
 {
     private const string API_URL = '/3.0/admin/advertisers';
 
@@ -22,39 +22,18 @@ final readonly class AffiseApiClient
     ) {
     }
 
-    private function getTotal(): int
+    public function getAll(): JsonResponse
     {
-        $response = $this->client->request(
-            'GET',
-            $this->domain.self::API_URL,
-            [
-                'query' => [
-                    'limit' => 1,
-                    'page' => 1,
-                ],
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'API-Key' => $this->apiKey,
-                ],
-            ]
-        );
-        $data = $response->toArray();
-
-        return $data['pagination']['total_count'];
-    }
-
-    public function getAdvertisers(): JsonResponse
-    {
-        $total = $this->getTotal();
+        $nextPage = 1;
         $data = [];
-        for ($i = 0; $i < $total / 100; $i++) {
+        while ($nextPage !== null) {
             $response = $this->client->request(
                 'GET',
                 $this->domain.self::API_URL,
                 [
                     'query' => [
                         'limit' => 100,
-                        'page' => $i,
+                        'page' => $nextPage,
                     ],
                     'headers' => [
                         'Accept' => 'application/json',
@@ -64,6 +43,7 @@ final readonly class AffiseApiClient
             );
             $response = $response->toArray();
             array_push($data, ...$response['advertisers']);
+            $nextPage = $response['pagination']['next_page'] ?? null;
         }
 
         foreach ($data as $item) {
@@ -71,17 +51,6 @@ final readonly class AffiseApiClient
                 $this->logger->warning('Skipping advertiser', ['item' => $item]);
                 continue;
             }
-//            $existingAdvertiser = $this
-//                ->entityManager
-//                ->getRepository(Advertiser::class)
-//                ->findOneBy([
-//                    'affiseAdvertiserId' => $item['id'],
-//                    'affiseManagerId' => $item['manager_obj']['id'],
-//                ]);
-//
-//            if ($existingAdvertiser) {
-//                continue;
-//            }
 
             $advertiser = new Advertiser();
 
