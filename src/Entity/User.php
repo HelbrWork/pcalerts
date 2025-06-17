@@ -3,39 +3,51 @@
 namespace App\Entity;
 
 use App\Enum\Roles;
+use App\Enum\UserType;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Blameable\Traits\BlameableEntity;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    use TimestampableEntity;
-    use BlameableEntity;
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
     private int|null $id = null;
 
-    #[ORM\Column(type: Types::STRING, length: 100, unique: true)]
-    private string $email;
+    #[ORM\Column(type: Types::STRING, length: 100, unique: true, nullable: true)]
+    private string|null $email;
 
-    #[ORM\Column(type: Types::STRING, length: 50, unique: true)]
-    private string $tgName;
+    #[ORM\Column(type: Types::STRING, length: 50, unique: true, nullable: true)]
+    private string|null $tgName;
+
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    private string|null $firstName;
+
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    private string|null $lastName;
+
+    #[ORM\Column(type: Types::STRING, nullable: true, enumType: UserType::class)]
+    private UserType|null $type;
+
+    #[ORM\Column(type: Types::STRING, length: 50, unique: true, nullable: true)]
+    private string|null $affiseUserID;
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $active = false;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
-    private ?array $roles;
+    private array|null $roles;
 
     #[ORM\Column(type: Types::STRING)]
     private string $password;
+
+    #[ORM\OneToMany()]
+    private Collection $advertisers;
 
     private ?string $plainPassword = null;
 
@@ -51,29 +63,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): User
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getTgName(): string
-    {
-        return $this->tgName;
-    }
-
-    public function setTgName(string $tgName): User
-    {
-        $this->tgName = $tgName;
-
-        return $this;
-    }
 
     public function isActive(): bool
     {
@@ -134,4 +123,77 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
         return $this;
     }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): User
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getTgName(): ?string
+    {
+        return $this->tgName;
+    }
+
+    public function setTgName(?string $tgName): User
+    {
+        $this->tgName = $tgName;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): User
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): User
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getType(): ?UserType
+    {
+        return $this->type;
+    }
+
+    public function setType(?UserType $type): User
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getAffiseUserID(): ?string
+    {
+        return $this->affiseUserID;
+    }
+
+    public function setAffiseUserID(?string $affiseUserID): User
+    {
+        $this->affiseUserID = $affiseUserID;
+
+        return $this;
+    }
+
 }

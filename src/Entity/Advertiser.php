@@ -27,6 +27,9 @@ class Advertiser
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $affiseCreatedAt;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'advertisers')]
+    private User $user;
+
     public function getId(): ?int
     {
         return $this->id;

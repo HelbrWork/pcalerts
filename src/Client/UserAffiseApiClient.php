@@ -2,20 +2,23 @@
 
 namespace App\Client;
 
-use App\Builder\AdvertiserEntityBuilder;
+use App\Builder\UserEntityBuilder;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final readonly class AdvertiserAffiseApiClient implements ApiClientInterface
+final readonly class UserAffiseApiClient implements ApiClientInterface
 {
-    private const string API_URL = '/3.0/admin/advertisers';
+    private const string API_URL = '/3.0/admin/users';
 
     public function __construct(
         #[Autowire('%affise_domain%')] private string $domain,
         #[Autowire('%affise_apikey%')] private string $apiKey,
         private HttpClientInterface $client,
-        private AdvertiserEntityBuilder $advertiserEntityBuilder
+        private UserEntityBuilder $userEntityBuilder,
+        private LoggerInterface $logger
     ) {
     }
 
@@ -39,10 +42,10 @@ final readonly class AdvertiserAffiseApiClient implements ApiClientInterface
                 ]
             );
             $response = $response->toArray();
-            array_push($data, ...$response['advertisers']);
+            array_push($data, ...$response['users']);
             $nextPage = $response['pagination']['next_page'] ?? null;
         }
-        $this->advertiserEntityBuilder->build($data);
+        $this->userEntityBuilder->build($data);
 
         return new JsonResponse('', 200);
     }
