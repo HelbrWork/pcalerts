@@ -38,6 +38,7 @@ class Advertiser
     public function setId(?int $id): Advertiser
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -49,6 +50,7 @@ class Advertiser
     public function setAffiseAdvertiserId(string $affiseAdvertiserId): Advertiser
     {
         $this->affiseAdvertiserId = $affiseAdvertiserId;
+
         return $this;
     }
 
@@ -60,6 +62,7 @@ class Advertiser
     public function setAffiseManagerId(string $affiseManagerId): Advertiser
     {
         $this->affiseManagerId = $affiseManagerId;
+
         return $this;
     }
 
@@ -71,6 +74,7 @@ class Advertiser
     public function setAffiseTitle(string $affiseTitle): Advertiser
     {
         $this->affiseTitle = $affiseTitle;
+
         return $this;
     }
 
@@ -82,6 +86,19 @@ class Advertiser
     public function setAffiseCreatedAt(DateTimeImmutable $affiseCreatedAt): Advertiser
     {
         $this->affiseCreatedAt = $affiseCreatedAt;
+
+        return $this;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): Advertiser
+    {
+        $this->user = $user;
+
         return $this;
     }
 }

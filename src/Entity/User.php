@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Enum\Roles;
 use App\Enum\UserType;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -46,8 +47,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::STRING)]
     private string $password;
 
-    #[ORM\OneToMany()]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Advertiser::class, cascade: ['persist'])]
     private Collection $advertisers;
+
+    public function __construct()
+    {
+        $this->advertisers = new ArrayCollection();
+    }
 
     private ?string $plainPassword = null;
 
@@ -62,7 +68,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 
     public function isActive(): bool
     {
@@ -100,6 +105,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword(?string $plainPassword): User
     {
         $this->plainPassword = $plainPassword;
+
         return $this;
     }
 
@@ -121,6 +127,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): User
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -196,4 +203,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getAdvertisers(): Collection
+    {
+        return $this->advertisers;
+    }
+
+    public function addAdvertiser(Advertiser $advertiser): User
+    {
+        if (!$this->advertisers->contains($advertiser)) {
+            $this->advertisers->add($advertiser);
+            $advertiser->setUser($this);
+        }
+        return $this;
+    }
 }
