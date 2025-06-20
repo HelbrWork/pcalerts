@@ -4,6 +4,7 @@ namespace App\Builder;
 
 use App\Entity\Advertiser;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -14,13 +15,19 @@ final readonly class UserEntityBuilder
     public function __construct(
         private EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $passwordHasher,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
+        private UserRepository $userRepository
     ) {
     }
 
     public function build(array $data): void
     {
         foreach ($data as $item) {
+            /** @var User|null $existingUser */
+            $existingUser = $this->userRepository->findOneBy(['email' => $item['email']]);
+            if ($existingUser !== null) {
+                continue;
+            }
             $user = new User();
             $user
                 ->setFirstName($item['first_name'] ?? null)
