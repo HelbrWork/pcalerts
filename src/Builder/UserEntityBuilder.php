@@ -2,20 +2,16 @@
 
 namespace App\Builder;
 
-use App\Entity\Advertiser;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 final readonly class UserEntityBuilder
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $passwordHasher,
-        private LoggerInterface $logger,
         private UserRepository $userRepository
     ) {
     }

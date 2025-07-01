@@ -3,10 +3,7 @@
 namespace App\Client;
 
 use App\Builder\UserEntityBuilder;
-use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final readonly class UserAffiseApiClient implements ApiClientInterface
@@ -18,11 +15,10 @@ final readonly class UserAffiseApiClient implements ApiClientInterface
         #[Autowire('%affise_apikey%')] private string $apiKey,
         private HttpClientInterface $client,
         private UserEntityBuilder $userEntityBuilder,
-        private LoggerInterface $logger
     ) {
     }
 
-    public function getAll(): JsonResponse
+    public function getAll(): void
     {
         $nextPage = 1;
         $data = [];
@@ -46,7 +42,5 @@ final readonly class UserAffiseApiClient implements ApiClientInterface
             $nextPage = $response['pagination']['next_page'] ?? null;
         }
         $this->userEntityBuilder->build($data);
-
-        return new JsonResponse('', 200);
     }
 }
