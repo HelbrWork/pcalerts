@@ -4,7 +4,6 @@ namespace App\Client;
 
 use App\Builder\AdvertiserEntityBuilder;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final readonly class AdvertiserAffiseApiClient implements ApiClientInterface
@@ -19,7 +18,7 @@ final readonly class AdvertiserAffiseApiClient implements ApiClientInterface
     ) {
     }
 
-    public function getAll(): JsonResponse
+    public function getAll(): void
     {
         $nextPage = 1;
         $data = [];
@@ -42,8 +41,7 @@ final readonly class AdvertiserAffiseApiClient implements ApiClientInterface
             array_push($data, ...$response['advertisers']);
             $nextPage = $response['pagination']['next_page'] ?? null;
         }
-        $this->advertiserEntityBuilder->build($data);
 
-        return new JsonResponse('', 200);
+        $this->advertiserEntityBuilder->build($data);
     }
 }

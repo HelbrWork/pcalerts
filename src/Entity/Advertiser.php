@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\AdvertiserRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +31,39 @@ class Advertiser
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'advertisers')]
     private User $user;
+
+    #[ORM\OneToMany(mappedBy: 'advertiser', targetEntity: Offer::class, cascade: ['persist'])]
+    private Collection $offers;
+
+    public function __construct()
+    {
+        $this->offers = new ArrayCollection();
+    }
+
+    public function getOffers(): Collection
+    {
+        return $this->offers;
+    }
+
+    public function addOffer(Offer $offer): self
+    {
+        if (!$this->offers->contains($offer)) {
+            $this->offers->add($offer);
+            $offer->setAdvertiser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffer(Offer $offer): self
+    {
+        if ($this->offers->contains($offer)) {
+            $this->offers->removeElement($offer);
+            $offer->setAdvertiser(null);
+        }
+
+        return $this;
+    }
 
     public function getId(): ?int
     {

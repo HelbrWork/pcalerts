@@ -2,19 +2,19 @@
 
 namespace App\Client;
 
-use App\Builder\UserEntityBuilder;
+use App\Builder\OfferEntityBuilder;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final readonly class UserAffiseApiClient implements ApiClientInterface
+final readonly class OfferAffiseApiClient implements ApiClientInterface
 {
-    private const string API_URL = '/3.0/admin/users';
+    private const string API_URL = '/3.0/offers';
 
     public function __construct(
         #[Autowire('%affise_domain%')] private string $domain,
         #[Autowire('%affise_apikey%')] private string $apiKey,
         private HttpClientInterface $client,
-        private UserEntityBuilder $userEntityBuilder,
+        private OfferEntityBuilder $entityBuilder
     ) {
     }
 
@@ -38,10 +38,10 @@ final readonly class UserAffiseApiClient implements ApiClientInterface
                 ]
             );
             $response = $response->toArray();
-            array_push($data, ...$response['users']);
+            array_push($data, ...$response['offers']);
             $nextPage = $response['pagination']['next_page'] ?? null;
         }
 
-        $this->userEntityBuilder->build($data);
+        $this->entityBuilder->build($data);
     }
 }
