@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 #[ORM\Entity(repositoryClass: AdvertiserRepository::class)]
 class Advertiser
@@ -30,7 +31,8 @@ class Advertiser
     private DateTimeImmutable $affiseCreatedAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'advertisers')]
-    private User $user;
+    #[JoinColumn(nullable: true)]
+    private ?User $user;
 
     #[ORM\OneToMany(mappedBy: 'advertiser', targetEntity: Offer::class, cascade: ['persist'])]
     private Collection $offers;
@@ -125,12 +127,12 @@ class Advertiser
         return $this;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): Advertiser
+    public function setUser(?User $user): Advertiser
     {
         $this->user = $user;
 

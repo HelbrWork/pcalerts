@@ -1,11 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Client\OfferAffiseApiClient;
-use App\Entity\Partner;
-use App\Client\PartnerAffiseApiClient;
-use App\Client\AdvertiserAffiseApiClient;
+use App\Service\UserAdvertiserConnector;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,14 +10,14 @@ use Symfony\Component\Routing\Attribute\Route;
 final class TestController extends AbstractController
 {
     public function __construct(
-        private readonly PartnerAffiseApiClient $partnerAffiseApiClient,
-    ){
+        private readonly UserAdvertiserConnector $connector,
+    ) {
     }
 
     #[Route('/adv', name: 'adv', methods: ['GET'])]
     public function test(): JsonResponse
     {
-        $this->partnerAffiseApiClient->getAll();
+        $this->connector->connect();
 
         return new JsonResponse('done', 200);
     }
