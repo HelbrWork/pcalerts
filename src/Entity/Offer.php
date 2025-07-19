@@ -13,8 +13,8 @@ class Offer
     #[ORM\Column(type: Types::INTEGER)]
     private int|null $id = null;
 
-    #[ORM\Column(type: Types::STRING, length: 100)]
-    private string $affiseAdvertiserId;
+    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
+    private ?string $affiseAdvertiserId = null;
 
     #[ORM\Column(type: Types::STRING, length: 100)]
     private string $affiseOfferId;
@@ -25,11 +25,11 @@ class Offer
     #[ORM\Column(type: Types::STRING, length: 100)]
     private string $status;
 
-    #[ORM\Column(type: Types::STRING, length: 100)]
-    private string $privacy;
+    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
+    private ?string $privacy  = null;
 
-    #[ORM\Column(type: Types::STRING, length: 100)]
-    private string $geo;
+    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
+    private ?string $geo = null;
 
     #[ORM\ManyToOne(targetEntity: Advertiser::class, inversedBy: 'offers')]
     #[ORM\JoinColumn(nullable: true)]
@@ -43,18 +43,6 @@ class Offer
     public function setId(?int $id): Offer
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    public function getAffiseAdvertiserId(): string
-    {
-        return $this->affiseAdvertiserId;
-    }
-
-    public function setAffiseAdvertiserId(string $affiseAdvertiserId): Offer
-    {
-        $this->affiseAdvertiserId = $affiseAdvertiserId;
 
         return $this;
     }
@@ -95,29 +83,44 @@ class Offer
         return $this;
     }
 
-    public function getPrivacy(): string
+    public function getAffiseAdvertiserId(): ?string
+    {
+        return $this->affiseAdvertiserId;
+    }
+
+    public function setAffiseAdvertiserId(?string $affiseAdvertiserId): Offer
+    {
+        $this->affiseAdvertiserId = $affiseAdvertiserId;
+
+        return $this;
+    }
+
+    public function getPrivacy(): ?string
     {
         return $this->privacy;
     }
 
-    public function setPrivacy(string $privacy): Offer
+    public function setPrivacy(?string $privacy): Offer
     {
         $this->privacy = $privacy;
 
         return $this;
     }
 
-    public function getGeo(): string
+
+    public function getGeo(): ?string
     {
         return $this->geo;
     }
 
-    public function setGeo(string $geo): Offer
+    public function setGeo(?string $geo): Offer
     {
         $this->geo = $geo;
 
         return $this;
     }
+
+
 
     public function getAdvertiser(): ?Advertiser
     {

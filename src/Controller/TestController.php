@@ -13,14 +13,14 @@ use Symfony\Component\Routing\Attribute\Route;
 final class TestController extends AbstractController
 {
     public function __construct(
-        private readonly AdvertiserAffiseApiClient $AdvertiserAffiseApiClient,
+        private readonly PartnerAffiseApiClient $partnerAffiseApiClient,
     ){
     }
 
     #[Route('/adv', name: 'adv', methods: ['GET'])]
     public function test(): JsonResponse
     {
-        $this->AdvertiserAffiseApiClient->getAll();
+        $this->partnerAffiseApiClient->getAll();
 
         return new JsonResponse('done', 200);
     }

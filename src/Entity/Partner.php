@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\PartnerRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
-#[ORM\Table(name: 'partner')]
+#[ORM\Entity(repositoryClass: PartnerRepository::class)]
 class Partner
 {
     #[ORM\Id]
@@ -14,7 +14,7 @@ class Partner
     private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private string $affiseId;
+    private string $affisePartnerId;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $msgType = null;
@@ -27,14 +27,14 @@ class Partner
         return $this->id;
     }
 
-    public function getAffiseId(): string
+    public function getAffisePartnerId(): string
     {
-        return $this->affiseId;
+        return $this->affisePartnerId;
     }
 
-    public function setAffiseId(string $affiseId): void
+    public function setAffisePartnerId(string $affisePartnerId): void
     {
-        $this->affiseId = $affiseId;
+        $this->affisePartnerId = $affisePartnerId;
     }
 
     public function getMsgType(): ?string
