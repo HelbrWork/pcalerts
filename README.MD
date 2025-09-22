@@ -14,8 +14,9 @@ docker exec -it pcalerts-php sh -c "php bin/console lexik:jwt:generate-keypair -
 
 
 Crons:
-1. Advertisers table
-2. Offers table
-3. User table
+1. Advertisers table - done
+2. Offers table - done
+3. User table - done
 4. Offer->Advertiser - to do
-5. User->Advertiser - done??
+5. User->Advertiser - done
+6. Caps Table - to do
