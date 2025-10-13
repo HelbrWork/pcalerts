@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\OfferRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: Offer::class)]
+#[ORM\Entity(repositoryClass: OfferRepository::class)]
 class Offer
 {
     #[ORM\Id]
@@ -34,6 +35,10 @@ class Offer
     #[ORM\ManyToOne(targetEntity: Advertiser::class, inversedBy: 'offers')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Advertiser $advertiser = null;
+
+    #[ORM\ManyToOne(targetEntity: Stream::class, inversedBy: 'offers')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Stream $stream = null;
 
     public function getId(): ?int
     {
@@ -120,7 +125,17 @@ class Offer
         return $this;
     }
 
+    public function getStream(): ?Stream
+    {
+        return $this->stream;
+    }
 
+    public function setStream(?Stream $stream): Offer
+    {
+        $this->stream = $stream;
+
+        return $this;
+    }
 
     public function getAdvertiser(): ?Advertiser
     {

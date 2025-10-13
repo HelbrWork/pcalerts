@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+{% block title %} contact {% endblock %}
+{% block body %}
+<h1>Contact</h1>
+{% for message in app.flashes('success') %}
+    <div style="color: green;">{{ message }}</div>
+{% endfor %}
+{{ form(form) }} {% endblock %}
