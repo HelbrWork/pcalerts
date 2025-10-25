@@ -3,15 +3,13 @@
 namespace App\Form;
 use App\Entity\Advertiser;
 use App\Entity\Offer;
-use Dom\Entity;
+use App\Enum\StreamSource;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,17 +40,18 @@ class StreamType extends AbstractType
                 'label' => 'Affiliate Id',
                 'mapped' => false,
             ])
-            ->add('geo', ChoiceType::class,[
-                'required' => true,
-                'label' => 'geo',
-            ])
-            ->add('Source', ChoiceType::class,[
+            ->add('source', EnumType::class,[
                 'required' => true,
                 'label' => 'Source',
+                'class' => StreamSource::class,
             ])
             ->add('start_at', DateType::class,[
                 'required' => true,
                 'label' => 'Start At',
+            ])
+            ->add('lastConvAt', DateType::class,[
+                'required' => true,
+                'label' => 'lastConvAt',
             ])
             ->add('source_comment', TextareaType::class,[
                 'required' => false,
