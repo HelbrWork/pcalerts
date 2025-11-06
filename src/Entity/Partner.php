@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PartnerRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PartnerRepository::class)]
@@ -10,16 +11,19 @@ class Partner
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private int $id;
+    #[ORM\Column(type: Types::INTEGER)]
+    private int|null $id = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $affisePartnerId;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $email;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $msgType = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $msgInfo = null;
 
     public function getId(): int
