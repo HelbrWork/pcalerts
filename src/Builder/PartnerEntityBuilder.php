@@ -1,14 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Builder;
 
-use App\Entity\Offer;
 use App\Entity\Partner;
-use App\Repository\OfferRepository;
 use App\Repository\PartnerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class PartnerEntityBuilder
+readonly class PartnerEntityBuilder
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
